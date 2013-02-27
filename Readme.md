@@ -13,15 +13,18 @@
 
   Create an easer by chaining a call to `.Ease()`, `.to()` and `.with()` which then returns an object with the method `.valueAtTime()`
 
-	var from = 100;
-	var to = 1000;
+  var from = 100;
+  var to = 1000;
 
-	var easing = require('easing').Ease( from ).to( to ).with("ease-in");
+  var easing = require('easing')
+    .Ease( from )
+    .to( to )
+    .with("ease-in");
 
-	easing.valueAtTime( 0 ) === 100;
-	easing.valueAtTime( 1 ) === 1000;
+  easing.valueAtTime( 0 ) === 100;
+  easing.valueAtTime( 1 ) === 1000;
 
-	easing.valueAtTime( some_value_between_from_and_to ) === correctly eased value
+  easing.valueAtTime( some_value_between_from_and_to ) === correctly eased value
 
 ### require('easing').Ease( value )
 
@@ -45,7 +48,7 @@
     inverse-in-and-out
     linear
     unhook
-	overshoot
+  overshoot
 
 ### .withCustomCurve( curve )
 
