@@ -56,19 +56,35 @@ Ease.prototype = {
 
 				self.curve = Bezier( curve );
 
-				return function(curve){
+				return {
 
-					return {
+					valueAtTime : function( time ){
 
-						valueAtTime : function( time ){
-
-							return self._from + ((self._to - self._from) * curve.pointArray( (1 + (time * -1)) )[1]);
-
-						}
+						return self._from + ((self._to - self._from) * curve.pointArray( (1 + (time * -1)) )[1]);
 
 					}
 
-				}(self.curve)			
+				}
+
+			},
+			withCSS3Curve : function( c2x, c2y, c3x, c3y){
+
+				self.curve = Bezier({
+					c1 : [0,0],
+					c2 : [c2x, c2y],
+					c3 : [c3x, c3y],
+					c4 : [1,1]
+				});
+
+				return {
+
+					valueAtTime : function( time ){
+
+						return self._from + ((self._to - self._from) * curve.pointArray( (1 + (time * -1)) )[1]);
+
+					}
+
+				}
 
 			}
 
