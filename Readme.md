@@ -31,6 +31,14 @@
 
   Takes the start/from value.
 
+### require('easing').presets
+
+  An array of valid preset names
+  
+### require('easing').isPreset( name )
+
+  Returns true if name is a valid preset.
+
 ### .to( value )
 
   ONLY available after a call to `.Ease()`
@@ -49,7 +57,8 @@
     inverse-in-and-out
     linear
     unhook
-  overshoot
+    overshoot
+    pop
 
 ### .withCustomCurve( curve )
 
