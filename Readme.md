@@ -59,7 +59,7 @@
 
   Curve data should be structured as: `{ c1 : [x, y], c2 : [x, y], c3 : [x, y], c4 : [x,y]}`
 
-### .withCSSCurve( c2.x, c2.y, c3.x, c3.y )
+### .withCSS3Curve( c2.x, c2.y, c3.x, c3.y )
 
   ONLY available after a call to `.to()`
 
