@@ -37,7 +37,7 @@ Ease.prototype = {
 					return {
 						valueAtTime : function( time ){
 
-							return self._from + ((self._to - self._from) * self.curve.pointArray( (1 + (time * -1)) )[1]);
+							return self._from + ((self._to - self._from) * self.curve.yAtTime( (1 + (time * -1)) ));
 
 						}
 
@@ -60,7 +60,7 @@ Ease.prototype = {
 
 					valueAtTime : function( time ){
 
-						return self._from + ((self._to - self._from) * self.curve.pointArray( (1 + (time * -1)) )[1]);
+						return self._from + ((self._to - self._from) * self.curve.yAtTime( (1 + (time * -1)) ));
 
 					}
 
@@ -80,7 +80,7 @@ Ease.prototype = {
 
 					valueAtTime : function( time ){
 
-						return self._from + ((self._to - self._from) * self.curve.pointArray( (1 + (time * -1)) )[1]);
+						return self._from + ((self._to - self._from) * self.curve.yAtTime( (1 + (time * -1)) ));
 
 					}
 
