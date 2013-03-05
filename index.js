@@ -105,3 +105,21 @@ module.exports.isPreset = function( val ){
 	return !! typeof presets[val] !== 'undefined';
 
 }
+
+module.exports.presets = function(){
+
+	var result = [];
+
+	for(var i in presets){
+
+		if(presets.hasOwnProperty(i)){
+
+			result.push(i);
+
+		}
+
+	}
+
+	return i;
+
+}
