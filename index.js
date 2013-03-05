@@ -99,3 +99,9 @@ module.exports.Ease = function( val ){
 	return new Ease(val);
 
 };
+
+module.exports.isPreset = function( val ){
+
+	return !! typeof presets[val] !== 'undefined';
+
+}

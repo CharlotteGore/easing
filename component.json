@@ -2,7 +2,7 @@
   "name": "easing",
   "repo": "charlottegore/easing",
   "description": "Bezier Curve based easing generator",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "keywords": [],
   "dependencies": {
     "charlottegore/bezier": "*"
