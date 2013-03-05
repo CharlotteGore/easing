@@ -106,7 +106,7 @@ module.exports.isPreset = function( val ){
 
 }
 
-module.exports.presets = function(){
+module.exports.presets = (function(){
 
 	var result = [];
 
@@ -120,6 +120,6 @@ module.exports.presets = function(){
 
 	}
 
-	return i;
+	return result;
 
-}
+}());
