@@ -28,11 +28,11 @@ Ease.prototype = {
 		this._to = val || 0;
 
 		return {
-			with : function( preset ){
+			using : function( preset ){
 
 				if(presets[preset]){
 
-					self.curve = Bezier(presets[preset])
+					self.curve = Bezier(presets[preset]);
 
 					return {
 						valueAtTime : function( time ){
@@ -52,7 +52,7 @@ Ease.prototype = {
 
 
 			},
-			withCustomCurve : function( curve){
+			usingCustomCurve : function( curve){
 
 				self.curve = Bezier( curve );
 
@@ -67,7 +67,7 @@ Ease.prototype = {
 				}
 
 			},
-			withCSS3Curve : function( c2x, c2y, c3x, c3y){
+			usingCSS3Curve : function( c2x, c2y, c3x, c3y){
 
 				self.curve = Bezier({
 					c1 : [0,0],

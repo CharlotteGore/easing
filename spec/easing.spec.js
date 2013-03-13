@@ -14,32 +14,32 @@ describe("Easing module", function(){
 
 		});
 
-		it(".to() returns a .with() method", function(){
+		it(".to() returns a .using() method", function(){
 
-			expect(require('easing').Ease(0).to(10).with).toBeDefined();
+			expect(require('easing').Ease(0).to(10).using).toBeDefined();
 
 		});
 
-		it(".to() returns a .withCustomCurve() method", function(){
+		it(".to() returns a .usingCustomCurve() method", function(){
 
-			expect(require('easing').Ease(0).to(10).withCustomCurve).toBeDefined();
+			expect(require('easing').Ease(0).to(10).usingCustomCurve).toBeDefined();
 
 		});
 
 		it(".with() returns a .valueAtTime() method", function(){
 
-			expect(require('easing').Ease(0).to(10).with("ease-in").valueAtTime).toBeDefined();
+			expect(require('easing').Ease(0).to(10).using("ease-in").valueAtTime).toBeDefined();
 
 		});
 		it(".withCustomCurve() returns a .valueAtTime() method", function(){
 
-			expect(require('easing').Ease(0).to(10).withCustomCurve({c1:[0,0],c2:[0,0],c3:[0,0],c4:[0,0]}).valueAtTime).toBeDefined();
+			expect(require('easing').Ease(0).to(10).usingCustomCurve({c1:[0,0],c2:[0,0],c3:[0,0],c4:[0,0]}).valueAtTime).toBeDefined();
 
 		});
 
 		it(".withCustomCurve() returns a .valueAtTime() method", function(){
 
-			expect(require('easing').Ease(0).to(10).withCustomCurve({c1:[0,0],c2:[0,0],c3:[0,0],c4:[0,0]}).valueAtTime).toBeDefined();
+			expect(require('easing').Ease(0).to(10).usingCustomCurve({c1:[0,0],c2:[0,0],c3:[0,0],c4:[0,0]}).valueAtTime).toBeDefined();
 
 		});
 
