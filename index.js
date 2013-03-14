@@ -62,11 +62,11 @@ Ease.prototype = {
 			c2 : [c2x, c2y],
 			c3 : [c3x, c3y],
 			c4 : [1,1]
-		});
+		}).buildLookup();
 
 		return function( time ){
 
-			return self.curve.yAtTime( time );
+			return self.curve.findYAtX(time); //  yAtTime( time );
 
 		}
 
