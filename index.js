@@ -20,6 +20,8 @@ Ease.prototype = {
 
 	using : function( preset ){
 
+		var self = this;
+
 		if(presets[preset]){
 
 			self.curve = Bezier(presets[preset]);
@@ -46,6 +48,8 @@ Ease.prototype = {
 	},
 	usingCustomCurve : function( curve ){
 
+		var self = this;
+
 		self.curve = Bezier( curve );
 
 		return function( time ){
@@ -56,6 +60,8 @@ Ease.prototype = {
 
 	},
 	usingCSS3Curve : function( c2x, c2y, c3x, c3y){
+		
+		var self = this;
 
 		self.curve = Bezier({
 			c1 : [0,0],
