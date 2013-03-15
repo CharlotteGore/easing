@@ -47,7 +47,7 @@ describe("Easing module", function(){
 			var easer = require('easing').Ease().using("ease-out");
 
 			expect( easer(0) ).toBe(0);
-			expect( easer(0.5) ).toBe(0.809375);
+			expect( easer(0.5) ).toBe(0.6847182689760001);
 			expect( easer(1) ).toBe(1);
 
 		});
@@ -57,7 +57,7 @@ describe("Easing module", function(){
 			var easer = require('easing').Ease().using("ease-in");
 
 			expect( easer(0) ).toBe(0);
-			expect( easer(0.5) ).toBe(0.1625);
+			expect( easer(0.5) ).toBe(0.3147198334560001);
 			expect( easer(1) ).toBe(1);
 
 		});

@@ -1,14 +1,18 @@
 var Bezier = require('bezier');
 
 var presets = {
-	"ease-in" : { c1 : [0,0], c2 : [0.43,0.01], c3 : [0.985,0.09], c4 : [1,1]},
-	"ease-out" : { c1 : [0,0], c2 : [0.015,0.83], c3 : [0.375,0.995], c4 : [1,1]},
-	"ease-in-and-out" :	{ c1 : [0,0], c2 : [0.995,-0.015], c3 : [0.025,1.02], c4 : [1,1]},
-	"linear" : { c1 : [0,0], c2 : [1,1]},
-	"inverse-in-and-out" : { c1 : [0,0], c2 : [-0.045,0.72], c3 : [1.09,0.22], c4 : [1,1]},
-	"unhook" : { c1 : [0,0], c2 : [0.19,-0.72], c3 : [-0.05,1.085], c4 : [1,1]},
-	"overshoot" : { c1 : [0,0], c2 : [0.87,-0.095], c3 : [0.8,1.55], c4 : [1,1]},
-	"pop" : { c1 : [0,0], c2 : [0.595,-0.795], c3 : [0.46,1.6], c4 : [1,1]}
+	"ease" : [0.25,0.1,0.25,1],
+	"ease-in" : [0.42,0,1,1],
+	"ease-out" : [0,0,0.58,1],
+	"ease-in-out" :	[0.42,0,0.58,1],
+	"linear" : [0,0,1,1],
+	"ease-in-out-back" : [0.45,-0.42, 0.595,1.34],
+	"ease-out-back" : [0.62,1.255, 0.665,1.095],
+	"ease-in-back" : [0.33,-0.305, 0.715,-0.155],
+	"ease-out-expo" : [0.015,0.745,0.225,0.985],
+	"ease-in-expo" : [0.775,0, 0.975,0.075],
+	"ease-in-cubic" :  [0.6,0.02 ,0.95,0.295],
+	"ease-out-cubic" : [0.075,0.61, 0.36,0.93]
 };
 
 var Ease = function(){
@@ -20,21 +24,16 @@ Ease.prototype = {
 
 	using : function( preset ){
 
-		var self = this;
+		var self = this,
+			p;
 
-		if(presets[preset]){
+		if(p = presets[preset]){
 
-			self.curve = Bezier(presets[preset]);
-
-			if(preset==="linear"){
-
-				self.curve.isLinear();
-
-			}
+			self.curve = Bezier({c1 : [0,0], c4 : [1,1], c2 : [p[0], p[1]], c3 : [p[2], p[3]] }).buildLookup();
 
 			return function( time ){
 
-				return self.curve.yAtTime( time );
+				return self.curve.findYAtX( time );
 
 			}
 
