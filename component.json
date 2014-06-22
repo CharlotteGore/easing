@@ -2,14 +2,14 @@
   "name": "easing",
   "repo": "charlottegore/easing",
   "description": "Bezier Curve based easing generator",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "keywords": [],
   "dependencies": {
     "charlottegore/bezier": "*"
   },
   "development": {
     "bestander/jasmine" : "*"
-    },
+  },
   "license": "MIT",
   "scripts": [
     "index.js"

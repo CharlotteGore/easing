@@ -29,6 +29,10 @@
 
     easer( some_value_between_from_and_to ) === correctly eased value
 
+### require('easing').generateAllSamples()
+
+  This causes the module to generate all the easing curves in advance which often leads to improvements in performance and higher resolution easing curves.
+
 ### require('easing').Ease()
 
   Create new easer.

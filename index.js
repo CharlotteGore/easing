@@ -15,6 +15,8 @@ var presets = {
 	"ease-out-cubic" : [0.075,0.61, 0.36,0.93]
 };
 
+var preComputed = {};
+
 var Ease = function(){
 
 	return this;
@@ -24,18 +26,21 @@ Ease.prototype = {
 
 	using : function( preset ){
 
-		var self = this,
-			p;
+		//var self = this,
+		//	p;
 
-		if(p = presets[preset]){
+		if(preComputed[preset]){
+			this.curve = preComputed[preset];
 
-			self.curve = Bezier({c1 : [0,0], c4 : [1,1], c2 : [p[0], p[1]], c3 : [p[2], p[3]] }).buildLookup();
+			return this.curve.findYAtX.bind(this.curve); 
 
-			return function( time ){
+		} else if(p = presets[preset]){
 
-				return self.curve.findYAtX( time );
+			preComputed[preset] = Bezier({c1 : [0,0], c4 : [1,1], c2 : [p[0], p[1]], c3 : [p[2], p[3]] }).buildLookup();
 
-			}
+			self.curve = preComputed[preset];
+
+			return this.curve.findYAtX.bind(this.curve); 
 
 
 		} else {
@@ -47,36 +52,37 @@ Ease.prototype = {
 	},
 	usingCustomCurve : function( curve ){
 
-		var self = this;
+		this.curve = Bezier( curve );
 
-		self.curve = Bezier( curve );
-
-		return function( time ){
-
-			return self.curve.yAtTime( time );
-
-		}
+		return this.curve.findYAtX.bind(this.curve); 
 
 	},
 	usingCSS3Curve : function( c2x, c2y, c3x, c3y){
-		
-		var self = this;
 
-		self.curve = Bezier({
+		this.curve = Bezier({
 			c1 : [0,0],
 			c2 : [c2x, c2y],
 			c3 : [c3x, c3y],
 			c4 : [1,1]
 		}).buildLookup();
 
-		return function( time ){
-
-			return self.curve.findYAtX(time); //  yAtTime( time );
-
-		}
+		return this.curve.findYAtX.bind(this.curve); 
 
 	}
 
+
+}
+
+module.exports.generateAllSamples = function(){
+
+	var p;
+
+	for (var i in presets){
+		if (presets.hasOwnProperty(i)){
+			p = presets[i];
+			preComputed[i] = Bezier({c1 : [0,0], c4 : [1,1], c2 : [p[0], p[1]], c3 : [p[2], p[3]] }).buildLookup();
+		}
+	}
 
 }
 
