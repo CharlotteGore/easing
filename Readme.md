@@ -11,8 +11,25 @@
 
 ## Installation
 
-    $ component install charlottegore/easing
+Browserify/NPM
 
+```sh
+    $ npm install --save gm-easing
+```
+
+```js
+  var easer = require('gm-easing');
+```
+
+Component
+
+```sh
+    $ component install charlottegore/easing
+```
+
+```js
+  var easer = require('easing');
+```
 ## API
 
   Create an easer by calling .Ease() then selecting an easing preset. This returns a function which, when passed an input ratio, returns the eased output ratio.

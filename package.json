@@ -1,0 +1,20 @@
+{
+  "name"          : "gm-easing",
+  "description"   : "Bezier curve based easing functions, including exact CSS-transition curves.",
+  "url"           : "http://charlottegore.github.io",
+  "keywords"      : ["easing", "animation", "css", "css-transition","bezier curves", "math", "client", "browser"],
+  "author"        : "Charlotte Gore <charlotte@greenmesa.co.uk>",
+  "dependencies"  : {
+    "gm-bezier" : "1.2.0"
+  },
+  "main"          : "index.js",
+  "version"       : "1.2.2",
+  "license"       : "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/charlottegore/bezier.git"
+  },
+  "browser" : {
+    "bezier" : "gm-bezier"
+  }
+}
