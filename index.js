@@ -26,8 +26,7 @@ Ease.prototype = {
 
 	using : function( preset ){
 
-		//var self = this,
-		//	p;
+		var p;
 
 		if(preComputed[preset]){
 			this.curve = preComputed[preset];
@@ -38,7 +37,7 @@ Ease.prototype = {
 
 			preComputed[preset] = Bezier({c1 : [0,0], c4 : [1,1], c2 : [p[0], p[1]], c3 : [p[2], p[3]] }).buildLookup();
 
-			self.curve = preComputed[preset];
+			this.curve = preComputed[preset];
 
 			return this.curve.findYAtX.bind(this.curve); 
 

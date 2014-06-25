@@ -8,7 +8,7 @@
     "gm-bezier" : "1.2.0"
   },
   "main"          : "index.js",
-  "version"       : "1.2.4",
+  "version"       : "1.2.6",
   "license"       : "MIT",
   "repository": {
     "type": "git",
