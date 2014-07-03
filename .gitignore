@@ -1,4 +1,4 @@
 components
 build
-jasmine
 node_modules
+test/browserified_tests.js

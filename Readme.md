@@ -1,13 +1,12 @@
-# Easing
+# Easing / gm-easing
 
-  Cubic-bezier based easing generator/helper, abstracting the ["Bezier"](http://github.com/CharlotteGore/bezier) module. 
+  Fluent Easing function provider with built in Bezier Curve based easing functions and exact clones of CSS3 transition built-ins, plus the ability 
+  to use your own custom easing functions.
 
-  This module supports two types of easing based on Bezier curves:
+  This module can be used for animations, audio and games and anything else. 
 
-  - Presets and CSS3 Curves use the "value of Y when X(n) === time" system.
-  - Arbitrary custom curves (that are not forced to use 0,0 and 1,1 and the start and end points) use "the value of Y at time" system instead.
+  Easing functions take a time value, `t` between 0 and 1 and return an eased time value.
 
-  Generating an easer returns a function which takes an input ratio of between 0 and 1 which returns the eased output ratio (which may not always been between 0 and 1).
 
 ## Installation
 
@@ -18,116 +17,128 @@ Browserify/NPM
 ```
 
 ```js
-  var easer = require('gm-easing');
+  var Easer = require('gm-easing').Easer;
 ```
 
-Component
-
-```sh
-    $ component install charlottegore/easing
-```
-
-```js
-  var easer = require('easing');
-```
 ## API
 
-  Create an easer by calling .Ease() then selecting an easing preset. This returns a function which, when passed an input ratio, returns the eased output ratio.
+### .Easer()
 
-    var from = 100;
-    var to = 1000;
+```js
+// generate an easing function...
+var easer = new Easer().using("ease-in");
 
-    var easer = require('easing')
-                .Ease()
-                .using("ease-in")
+// pass your delta (a value between 0 and 1) to the easer to get your eased value.
+var easedDelta = easer( delta );
+```
 
-    easer( 0 ) === 100;
-    easer( 1 ) === 1000;
+### .generateAllSamples() Optimisation Considerations
 
-    easer( some_value_between_from_and_to ) === correctly eased value
+CSS3 transition curve emulation relies on pre-generated samples. By default, after a CSS curve is used 
+the first time, the samples are then cached. This could, on slower devices, cause a slight delay which can 
+be avoided by generating the samples at some other time when your applications is not otherwise under any
+particular load. 
 
-### require('easing').generateAllSamples()
+```js
+// browserify:
+require('gm-easing').generateAllSamples();
+// component:
+require('easing').generateAllSamples();
+```
 
-  This causes the module to generate all the easing curves in advance which often leads to improvements in performance and higher resolution easing curves.
+### .presets
 
-### require('easing').Ease()
-
-  Create new easer.
-
-### require('easing').presets
-
-  Returns the list of presets.
+Returns the list of available presets.
   
-### require('easing').isPreset( name )
+### .isPreset( name )
 
-  Returns true if name is a valid preset.
+Returns true if name is a valid preset.
 
 ## Easer API
 
-### .using( "preset" )
+### Easer().using( "preset" )
 
-  Returns a function which takes an input ratio of 0 to 1 and returns the eased output ratio.
+Returns a function which takes an input ratio of 0 to 1 and returns the eased output ratio.
 
-  Use an easing preset. Choices are:
+Use an easing preset. Choices are:
 
-  - linear
-  - ease - Replicates CSS3 default
-  - ease-in - Replicates CSS3 ease-in
-  - ease-out - Replicates CSS3 ease-out
-  - ease-in-out - Replicates CSS3 ease-in-out
-  - ease-in-back
-  - ease-out-back
-  - ease-in-out-back
-  - ease-in-expo
-  - ease-out-expo
-  - ease-in-cubic
-  - ease-out-cubic
+- linear
+- ease - Replicates CSS3 default
+- ease-in - Replicates CSS3 ease-in
+- ease-out - Replicates CSS3 ease-out
+- ease-in-out - Replicates CSS3 ease-in-out
+- ease-in-back
+- ease-out-back
+- ease-in-out-back
+- ease-in-expo
+- ease-out-expo
+- ease-in-cubic
+- ease-out-cubic
 
-    > var easer = require('easing').Ease().using('ease-in');
-    > easer(0)
-    > 0
-    > easer(1)
-    > 1
-    > easer(0.5)
-    > 0.3147198334560001
+```js
+var easer = new Easer().using('ease-in');
+easer(0); // 0
+easer(1); // 1
+easer(0.5); // 0.3147198334560001
+```
 
-### .usingCustomCurve( curve )
+### new Easer().usingCSS3Curve( c2.x, c2.y, c3.x, c3.y [, samples])
 
-  Returns a function which takes an input ratio of 0 to 1 and returns the eased output ratio.
+![How CSS3 Curves work](/images/css-easing.svg?raw=true "How CSS3 easing curves work")
 
-  Easing curve based on the value of Y at Time.
+Creates an easing function which emulates the behaviour of a custom CSS3 easing curve. Any CSS3 curve generator can generate
+compatible values for this, for example [Ceaser](http://matthewlein.com/ceaser/).
 
-  Allows you to define your own easing curve with any arbitrary curve.
+Note that computing "y at x(t)" requires the building of a lookup table, although only once for any given curve. 
+For the best performance it is better to generate an easing function using the same custom curve long before 
+you intend to use it in an actual animation.
 
-  Curve data should be structured as: `{ c1 : [x, y], c2 : [x, y], c3 : [x, y], c4 : [x,y]}`
+Optionally you can specify the number of samples required. By default 10,000 samples are generated which serves for most 
+purposes but if you notice jerky movement for extremely long running animations then either use more samples (at the expense of more memory),
+use a Bezier Curve directly (without samples), or use a custom easing function.
 
-    > var easer = require('easing').Ease().usingCustomCurve({ c1 : [0,0], c2 : [0.075,0.61], c3 : [0.36,0.93], c4 : [1,1]});
-    > easer(0)
-    > 0
-    > easer(1)
-    > 1
-    > easer(0.5)
-    > 0.7025
+```js
+var easer = new Easer().usingCSS3Curve(0.33,-0.305, 0.715,-0.155);
+easer(0); // 0
+easer(1); // 1
+easer(0.5); // -0.06145341884495001
+```
 
-### .usingCSS3Curve( c2.x, c2.y, c3.x, c3.y )
+Note that, as with CSS3 transition-timing-functions, x must stay between 0 and 1 along the curve. It'll still run but it's kinda glitchy. In testing, real CSS3 transitions glitch out in exactly the same way.
 
-  Returns a function which takes an input ratio of 0 to 1 and returns the eased output ratio.
+### new Easer().usingCustomCurve( curve )
 
-  Easing curve based on the value of Y when X(n) === time.
+![How CSS3 Curves work](/images/bezier-easing.svg?raw=true "How CSS3 easing curves work")
 
-  Allows you to define your own easing curve in the CSS3 style, and have the easing applied in the CSS3 way. It takes the same arguments and with the same values and gives the same result.
+An easing function can be generated directly from any arbitrary Bezier Curve where the C1 and C4 are not limited to 0,0 and 1,1 respectively. 
 
-    > var easer = require('easing').Ease().usingCSS3Curve(0.33,-0.305, 0.715,-0.155);
-    > easer(0)
-    > 0
-    > easer(1)
-    > 1
-    > easer(0.5)
-    > -0.06145341884495001
+There is an important difference between this and using CSS3Curves: No samples are generated. Eased values are generated by computing 
+the value of `y` at `time` on every call to the easing function. The x value is ignored. 
 
-  Note that, as with CSS3 transition-timing-functions, x must stay between 0 and 1 along the curve. It'll still run but it's kinda glitchy. In testing, real CSS3 transitions glitch out in exactly the same way.
+The effects tend to be more subtle, but it is more efficent in terms of memory usage and there is no delay while samples are precomputed. 
 
-  Returns a function which calculates the value at `time` when executed. 0 represents the start, 1 the end. You can go lower and higher than these, however.
+Curve data should be structured as an object containing and vector arrays: `{ c1 : [x, y], c2 : [x, y], c3 : [x, y], c4 : [x,y]}`
+
+```js
+var easer = new Easer().usingCustomCurve({ c1 : [0,0], c2 : [0.075,0.61], c3 : [0.36,0.93], c4 : [1,1]});
+easer(0); // 0
+easer(1); // 1
+easer(0.5); //0.7025
+
+### new Easer().usingCustomEaser( function )
+
+Easer allows you to use your own easing functions. Any function will do, so long as it takes a value between 0 and 1 and returns some value useful to you. 
+Mostly this is support implementations like [gm-tween](https://github.com/charlottegore/tween) that rely on a consistent easing interface but occasionally
+want to offer developers the ability to implement their own easing functions.
+
+```js
+var easer = new Easer().usingCustomEaser( function (t){
+  return 1 - t;
+});
+easer(0); // 1
+easer(1); // 0
+easer(0.5); // 0.5
+```
 
 ## License
 
