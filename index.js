@@ -1,3 +1,5 @@
+require('bindpolyfill');
+
 var Bezier = require('bezier').Bezier;
 
 var presets = {
